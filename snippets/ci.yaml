@@ -35,15 +35,6 @@ jobs:
 
       # add your steps here, e.g. lint, test, build etc.
 
-      - name: Check code formatting
-        run: npx prettier --check .
-
-      - name: Typecheck
-        run: npx tsc --noEmit
-
-      - name: Run tests
-        run: npm test    
-
       - name: Compute image tag
         id: meta
         run: |

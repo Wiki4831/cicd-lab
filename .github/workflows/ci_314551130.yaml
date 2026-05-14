@@ -20,6 +20,7 @@ jobs:
       fail-fast: false
       matrix:
         node-version: ['24']
+
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -34,6 +35,18 @@ jobs:
         run: npm ci
 
       # add your steps here, e.g. lint, test, build etc.
+
+      - name: Check code formatting
+        run: npx prettier --check .
+
+      - name: Typecheck
+        run: npx tsc --noEmit
+
+      - name: Lint code
+        run: npx eslint .
+
+      - name: Run tests
+        run: npm test
 
       - name: Compute image tag
         id: meta
@@ -57,7 +70,6 @@ jobs:
           echo "Image tag: ${{ steps.meta.outputs.image_tag }}"
 
       - name: Build Docker image
-        if: ${{ matrix.node-version == '24' }}
         run: docker build -t my-app:${{ steps.meta.outputs.image_tag }} .
 
   cd:
