@@ -6,6 +6,8 @@ export function buildApp(options: FastifyServerOptions = {}) {
     ...options
   });
 
+  const appVersion = String(process.env.APP_VERSION);
+  
   app.get('/', async () => {
     return {
       message: 'CI/CD Lab Fastify app is running',
